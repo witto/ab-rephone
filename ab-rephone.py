@@ -51,21 +51,34 @@ group_name = ''    # Default=''
 #
 patterns = [
 
+        # Deixa somente números
+        ('[^\d]', r''),
+        # Remove o 55
+        ('^55(\d{10,})$', r'\1'),
+        # Remove o 041
+        ('^0?41(\d{10,11})$', r'\1'),
+        # Adiciona ddd padrao (11)
+        ('^(\d{8,9})$', r'11\1'),
+        # Coloca o nono digito
+        ('^11([987]\d{7})$', r'119\1'),        
+        # Adiciona 55 e formata
+        ('^(\d{2})(\d{4,5})(\d{4})$', r'+55 (\1) \2-\3'),
+
         # NNNNNNNN -> NNNN-NNNN
         # Add hyphen
-        ('^(\d{4})(\d{4})$', r'\1-\2'),
+        #('^(\d{4})(\d{4})$', r'\1-\2'),
 
         # NNNN-NNNN -> (47) NNNN-NNNN
         # Numbers with no area code. Add the (47) prefix.
-        ('^(\d{4}-\d{4})$', r'(47) \1'),
+        #('^(\d{4}-\d{4})$', r'(47) \1'),
 
         # (0AA) NNNN-NNNN -> (AA) NNNN-NNNN
         # Remove the leading zero in malformed phone (no carrier)
-        ('^\(0(\d{2})\) (\d{4}-\d{4})$', r'(\1) \2'),
+        #('^\(0(\d{2})\) (\d{4}-\d{4})$', r'(\1) \2'),
 
         # (AA) NNNN-NNNN -> (041 AA) NNNN-NNNN
         # Numbers with area code, but no carrier code (041)
-        ('^\((\d{2})\) (\d{4}-\d{4})$', r'(041 \1) \2'),
+        #('^\((\d{2})\) (\d{4}-\d{4})$', r'(041 \1) \2'),
 
         ### Some useful samples you may use:
         # 
